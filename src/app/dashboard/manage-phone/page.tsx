@@ -33,17 +33,19 @@ function ManagePhoneContent() {
     const { data: session, status } = useSession();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const provider = searchParams.get('provider') || 'twilio';
+    const [mounted, setMounted] = useState(false);
+
+    // Initialize provider logic after mounting or safely
+    const provider = searchParams ? (searchParams.get('provider') || 'twilio') : 'twilio';
 
     const [company, setCompany] = useState<any>(null);
 
     // Search State
-    // Default country based on provider
     const getDefaultCountry = (prov: string) => {
         if (prov === 'cequens') return 'EG';
-        if (prov === 'kaleyra') return 'IT'; // or IN
+        if (prov === 'kaleyra') return 'IT';
         if (prov === 'infobip') return 'TR';
-        return 'DE'; // Twilio / Default
+        return 'DE';
     };
 
     const [searchCountry, setSearchCountry] = useState(getDefaultCountry(provider));
@@ -51,22 +53,9 @@ function ManagePhoneContent() {
     const [availableNumbers, setAvailableNumbers] = useState<any[]>([]);
     const [searching, setSearching] = useState(false);
 
-
-    // Purchase State
-    const [selectedNumber, setSelectedNumber] = useState<any>(null);
-    const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
-    const [purchasing, setPurchasing] = useState(false);
-    const [purchaseError, setPurchaseError] = useState<string | null>(null);
-
-    // Legal Entity Form
-    const [formData, setFormData] = useState({
-        legalName: '',
-        street: '',
-        city: '',
-        postalCode: '',
-        region: '',
-        isoCountry: 'DE'
-    });
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         if (status === 'unauthenticated') router.push('/login');
@@ -81,6 +70,22 @@ function ManagePhoneContent() {
             if (data.name) setFormData(prev => ({ ...prev, legalName: data.name }));
         } catch (err) { console.error(err); }
     };
+
+    // Purchase State (moved inside to keep scope clean)
+    const [selectedNumber, setSelectedNumber] = useState<any>(null);
+    const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
+    const [purchasing, setPurchasing] = useState(false);
+    const [purchaseError, setPurchaseError] = useState<string | null>(null);
+
+    // Legal Entity Form
+    const [formData, setFormData] = useState({
+        legalName: '',
+        street: '',
+        city: '',
+        postalCode: '',
+        region: '',
+        isoCountry: 'DE'
+    });
 
     const searchNumbers = async () => {
         setSearching(true);
@@ -120,7 +125,7 @@ function ManagePhoneContent() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     companyId: company._id,
-                    provider: provider, // 'twilio', 'cequens', etc.
+                    provider: provider,
                     phoneNumber: selectedNumber.phoneNumber,
                     friendlyName: selectedNumber.friendlyName,
                     legalName: formData.legalName,
@@ -152,7 +157,7 @@ function ManagePhoneContent() {
         }
     };
 
-    if (status === 'loading' || !company) return <div style={{ padding: '4rem', textAlign: 'center', color: 'white' }}>Loading System...</div>;
+    if (!mounted || status === 'loading' || !company) return <div style={{ padding: '4rem', textAlign: 'center', color: 'white' }}>Loading System...</div>;
 
     const inputStyle = {
         width: '100%',
@@ -184,7 +189,6 @@ function ManagePhoneContent() {
                 </Link>
             </div>
 
-            {/* Current Number Status */}
             <section className="glass card" style={{ padding: '2.5rem', marginBottom: '3rem', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'relative', zIndex: 2 }}>
                     <h2 style={{ fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '1px', color: '#94a3b8', marginBottom: '1.5rem', fontWeight: 600 }}>Active Connection</h2>
