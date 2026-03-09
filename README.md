@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# butTel - AI Virtual Receptionist
 
-## Getting Started
+butTel is a professional AI-powered virtual receptionist designed for accounting, tax, and contract consulting firms in Germany. It automatically detects and responds in **Arabic, German, and English**, manages office hours, and provides intelligent call summaries.
 
-First, run the development server:
+## ✨ Features
+- **Multilingual Support:** Seamless detection of Arabic, German, and English.
+- **Office Hours Logic:** Gracefully handles calls outside of 09:00 - 17:00 Germany Time.
+- **Intelligent Routing:** Offers to schedule appointments, transfer calls, or record messages.
+- **Premium Dashboard:** Real-time monitoring of call logs and AI intent analysis.
+- **Secure & Professional:** Follows strict guidelines to avoid providing unauthorized legal/tax advice.
 
+## 🛠 Tech Stack
+- **Next.js 15+** (App Router)
+- **OpenAI GPT-4o** (Language Detection & Conversation)
+- **Twilio Voice API** (Telephony Gateway)
+- **Luxon** (Timezone management)
+- **Vanilla CSS** (Premium glassmorphism UI)
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- Node.js 18+
+- Twilio Account
+- OpenAI API Key
+
+### 2. Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Environment Setup
+Copy `.env.example` to `.env.local` and fill in your credentials:
+```bash
+cp .env.example .env.local
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Running Locally
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 5. Twilio Configuration
+Point your Twilio Phone Number webhook to:
+`https://your-domain.com/api/voice`
 
-## Learn More
+## 📁 Project Structure
+- `/src/app/api/voice`: Primary webhook for incoming calls.
+- `/src/lib/assistant.ts`: Core AI personality and business logic.
+- `/src/components/CallLogs.tsx`: Real-time dashboard log viewer.
+- `/public`: Static assets including the premium logo.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ⚖️ Disclaimer
+This AI assistant is designed to handle general inquiries. It is programmed to NEVER provide specific legal, tax, or financial advice.
