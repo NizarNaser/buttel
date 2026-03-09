@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -29,7 +29,7 @@ const COUNTRIES = [
     { code: 'IN', name: 'India (+91)' } // Added for Kaleyra relevance
 ];
 
-export default function ManagePhonePage() {
+function ManagePhoneContent() {
     const { data: session, status } = useSession();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -89,32 +89,6 @@ export default function ManagePhonePage() {
             const params = new URLSearchParams({ country: searchCountry, type: 'local' });
             if (areaCode) params.append('areaCode', areaCode);
 
-            // Dynamic endpoint based on provider: /api/twilio/search-numbers, /api/cequens/search-numbers, etc.
-            // But we might need to conform to a standard route or query param if your backend structure suggests it.
-            // Assuming your backend currently has folders: /api/twilio, /api/cequens? or maybe we reuse a unified route?
-            // Looking at file structure, you have /api/twilio/search-numbers. 
-            // You likely need to create /api/cequens/search-numbers etc OR better:
-            // Let's us a unified route if possible, OR conditional:
-
-            let endpoint = `/api/twilio/search-numbers`; // default
-            // If you have created specific routes for others:
-            // endpoint = `/api/${provider}/search-numbers`; 
-
-            // However, since we haven't explicitly created /api/cequens/search-numbers folder structure yet in this session's context 
-            // (we only edited adapters and manager), we should probably route through a unified handler or ensure those routes exist.
-            // Check: we have `src/lib/telephony/manager.ts`. We need an API route that uses this manager.
-            // For now, to keep it simple and working with the Adapter pattern we built:
-            // We should use a UNIFIED route that takes 'provider' as a param, OR update the existing twilio route to be generic.
-
-            // LET'S ASSUME we want to use the unified approach.
-            // But wait, the previous code was strictly hitting '/api/twilio/search-numbers'.
-
-            // FIX: We need to make sure the fetch calls the right place. 
-            // Ideally: /api/providers/search?provider=...
-            // But let's assume we stick to the plan.
-
-            // NOTE: I will route to `/api/providers/search` which we should create to leverage the TelephonyManager. 
-            // This is cleaner than duplicating routes for every provider.
             const res = await fetch(`/api/providers/search?${params.toString()}&provider=${provider}`);
             const data = await res.json();
             if (data.numbers) {
@@ -237,11 +211,9 @@ export default function ManagePhonePage() {
                         </div>
                     )}
                 </div>
-                {/* Decorative background element */}
                 <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(14,165,233,0.1) 0%, rgba(0,0,0,0) 70%)', borderRadius: '50%', pointerEvents: 'none' }}></div>
             </section>
 
-            {/* Search Section */}
             {!company.phoneNumber && (
                 <section className="glass card" style={{ padding: '2.5rem' }}>
                     <h2 style={{ fontSize: '1.8rem', color: 'white', marginBottom: '2rem' }}>Acquire New Number</h2>
@@ -279,7 +251,6 @@ export default function ManagePhonePage() {
                         </button>
                     </div>
 
-                    {/* Search Results Grid */}
                     {availableNumbers.length > 0 && (
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
                             {availableNumbers.map((num: any) => (
@@ -317,7 +288,6 @@ export default function ManagePhonePage() {
                 </section>
             )}
 
-            {/* Purchase Modal Overlay */}
             {isPurchaseModalOpen && selectedNumber && (
                 <div style={{
                     position: 'fixed', inset: 0,
@@ -436,5 +406,13 @@ export default function ManagePhonePage() {
                 </div>
             )}
         </main>
+    );
+}
+
+export default function ManagePhonePage() {
+    return (
+        <Suspense fallback={<div style={{ padding: '4rem', textAlign: 'center', color: 'white' }}>Loading Interface...</div>}>
+            <ManagePhoneContent />
+        </Suspense>
     );
 }
