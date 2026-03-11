@@ -78,32 +78,32 @@ export default function CompanyDashboard() {
 
     return (
         <main className="container" style={{ padding: '2rem 1rem' }}>
-            <header style={{ marginBottom: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <header className="mobile-stack" style={{ marginBottom: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <div className="glass" style={{ padding: '0.4rem', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div className="glass" style={{ padding: '0.4rem', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                             <img src="/logo.png" alt="butTel Logo" width={48} height={48} style={{ borderRadius: '6px' }} />
                         </div>
-                        <h1 className="gradient-text" style={{ fontSize: '2.5rem', lineHeight: '1' }}>Company Console</h1>
+                        <h1 className="gradient-text" style={{ fontSize: 'clamp(1.5rem, 6vw, 2.5rem)', lineHeight: '1' }}>Company Console</h1>
                     </div>
-                    <p style={{ color: '#94a3b8', marginTop: '0.5rem' }}>Managing: {company?.name}</p>
+                    <p style={{ color: '#94a3b8', marginTop: '0.5rem', fontSize: '0.9rem' }}>Managing: {company?.name}</p>
                     <Link href="/" style={{ fontSize: '0.85rem', color: '#64748b', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
                         <span>←</span> Back to Home
                     </Link>
                 </div>
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                    <Link href={`/recharge/${company?._id}`} className="btn btn-primary">
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                    <Link href={`/recharge/${company?._id}`} className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }}>
                         Top up Credits
                     </Link>
-                    <button onClick={() => signOut({ callbackUrl: '/' })} className="btn" style={{ background: '#1e293b', color: 'white' }}>Logout</button>
+                    <button onClick={() => signOut({ callbackUrl: '/' })} className="btn" style={{ background: '#1e293b', color: 'white', padding: '0.5rem 1rem', fontSize: '0.85rem' }}>Logout</button>
                 </div>
             </header>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '2rem', marginBottom: '4rem' }}>
+            <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '4rem' }}>
                 <aside style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div className="glass card" style={{ padding: '2rem', textAlign: 'center' }}>
                         <h3 style={{ color: '#94a3b8', fontSize: '1rem', marginBottom: '1rem' }}>AI Credits Left</h3>
-                        <div style={{ fontSize: '3rem', fontWeight: 800, color: (company?.credits || 0) < 5 ? '#ef4444' : '#10b981' }}>
+                        <div style={{ fontSize: 'clamp(2.5rem, 8vw, 3.5rem)', fontWeight: 800, color: (company?.credits || 0) < 5 ? '#ef4444' : '#10b981' }}>
                             {company?.credits || 0}
                         </div>
                         <p style={{ fontSize: '0.8rem', color: '#64748b' }}>Minutes of voice-time</p>
@@ -140,7 +140,7 @@ export default function CompanyDashboard() {
                     </p>
 
                     <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem' }}>
                             <div>
                                 <label style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '0.5rem' }}>Official Business Name</label>
                                 <input
@@ -202,31 +202,31 @@ export default function CompanyDashboard() {
                             />
                         </div>
 
-                        <button disabled={updating} className="btn btn-primary" style={{ padding: '1rem', width: 'fit-content' }}>
+                        <button disabled={updating} className="btn btn-primary" style={{ padding: '1rem', width: '100%', maxWidth: '300px' }}>
                             {updating ? 'Updating...' : 'Save Knowledge Base'}
                         </button>
                     </form>
                 </section>
             </div>
 
-            <section className="glass card" style={{ padding: '2rem', marginBottom: '4rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                    <h2 style={{ fontSize: '1.5rem' }}>Financial & Usage History</h2>
-                    <button onClick={() => window.print()} className="btn" style={{ background: '#10b981', color: 'white', fontSize: '0.8rem' }}>🖨️ Print Statement</button>
+            <section className="glass card" style={{ padding: 'clamp(1.5rem, 5vw, 2rem)', marginBottom: '4rem' }}>
+                <div className="mobile-stack" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                    <h2 style={{ fontSize: '1.5rem' }}>Financial History</h2>
+                    <button onClick={() => window.print()} className="btn mobile-hide" style={{ background: '#10b981', color: 'white', fontSize: '0.8rem' }}>🖨️ Print Statement</button>
                 </div>
 
                 {analytics.stats && (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
                         <div style={{ padding: '1rem', background: 'rgba(0,0,0,0.3)', borderRadius: '8px', border: '1px solid #1e293b' }}>
                             <small style={{ color: '#64748b', display: 'block' }}>Total Invested</small>
                             <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#10b981' }}>${analytics.stats.totalRechargedUSD.toFixed(2)}</span>
                         </div>
                         <div style={{ padding: '1rem', background: 'rgba(0,0,0,0.3)', borderRadius: '8px', border: '1px solid #1e293b' }}>
-                            <small style={{ color: '#64748b', display: 'block' }}>Total Used Airtime</small>
+                            <small style={{ color: '#64748b', display: 'block' }}>Airtime Used</small>
                             <span style={{ fontSize: '1.25rem', fontWeight: 700 }}>{analytics.stats.totalMinutesUsed} <small>min</small></span>
                         </div>
                         <div style={{ padding: '1rem', background: 'rgba(0,0,0,0.3)', borderRadius: '8px', border: '1px solid #1e293b' }}>
-                            <small style={{ color: '#64748b', display: 'block' }}>Available Credits</small>
+                            <small style={{ color: '#64748b', display: 'block' }}>Credits</small>
                             <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0ea5e9' }}>{company?.credits || 0} min</span>
                         </div>
                     </div>

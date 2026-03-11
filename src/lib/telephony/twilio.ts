@@ -119,13 +119,14 @@ export class TwilioAdapter implements IProviderAdapter {
         }
 
         // 3. Create Address
+        const addressData = legalEntity.address || legalEntity;
         const addr = await subClient.addresses.create({
             customerName: legalEntity.legalName || company.name,
-            street: legalEntity.street,
-            city: legalEntity.city,
-            region: legalEntity.region || legalEntity.city,
-            postalCode: legalEntity.postalCode,
-            isoCountry: legalEntity.isoCountry || (isGermany ? 'DE' : 'US'),
+            street: addressData.street,
+            city: addressData.city,
+            region: addressData.region || addressData.city,
+            postalCode: addressData.postalCode,
+            isoCountry: addressData.isoCountry || (isGermany ? 'DE' : 'US'),
             friendlyName: `${legalEntity.legalName || company.name} - Primary`
         });
 
@@ -150,7 +151,7 @@ export class TwilioAdapter implements IProviderAdapter {
 
             // Update company
             company.phoneNumber = purchased.phoneNumber;
-            company.address = `${legalEntity.street}, ${legalEntity.postalCode} ${legalEntity.city}`;
+            company.address = `${addressData.street}, ${addressData.postalCode} ${addressData.city}, ${addressData.isoCountry || 'DE'}`;
             await company.save();
 
             return {

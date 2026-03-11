@@ -179,34 +179,34 @@ function ManagePhoneContent() {
 
     return (
         <main className="container" style={{ padding: '2rem' }}>
-            <div style={{ marginBottom: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="mobile-stack" style={{ marginBottom: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                    <h1 className="gradient-text" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Phone Management</h1>
+                    <h1 className="gradient-text" style={{ fontSize: 'clamp(2rem, 6vw, 2.5rem)', marginBottom: '0.5rem' }}>Phone Management</h1>
                     <p style={{ color: '#94a3b8' }}>Secure your dedicated line for AI reception.</p>
                 </div>
-                <Link href="/dashboard" className="btn" style={{ background: '#1e293b', color: 'white', textDecoration: 'none' }}>
+                <Link href="/dashboard" className="btn" style={{ background: '#1e293b', color: 'white', textDecoration: 'none', textAlign: 'center' }}>
                     ← Back to Dashboard
                 </Link>
             </div>
 
-            <section className="glass card" style={{ padding: '2.5rem', marginBottom: '3rem', position: 'relative', overflow: 'hidden' }}>
+            <section className="glass card" style={{ padding: 'clamp(1.5rem, 5vw, 2.5rem)', marginBottom: '3rem', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'relative', zIndex: 2 }}>
                     <h2 style={{ fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '1px', color: '#94a3b8', marginBottom: '1.5rem', fontWeight: 600 }}>Active Connection</h2>
 
                     {company.phoneNumber ? (
                         <div>
-                            <div style={{ fontSize: '3rem', fontFamily: 'monospace', fontWeight: 700, color: '#10b981', marginBottom: '1rem' }}>
+                            <div style={{ fontSize: 'clamp(1.5rem, 8vw, 3rem)', fontFamily: 'monospace', fontWeight: 700, color: '#10b981', marginBottom: '1rem', wordBreak: 'break-all' }}>
                                 {company.phoneNumber}
                             </div>
-                            <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.9rem', color: '#cbd5e1' }}>
+                            <div style={{ display: 'flex', gap: '1rem', fontSize: '0.85rem', color: '#cbd5e1', flexWrap: 'wrap' }}>
                                 <span className="status-badge status-online">● Active</span>
-                                <span>Voice Routing: <strong>butTel AI Agent</strong></span>
-                                <span>Subaccount: <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>{company.twilioSubaccountSid || 'Main'}</code></span>
+                                <span>Voice Routing: <strong>AI Agent</strong></span>
+                                <span>Subaccount: <code style={{ background: '#1e293b', padding: '2px 6px', borderRadius: '4px' }}>{company.twilioSubaccountSid?.slice(0, 10)}...</code></span>
                             </div>
                         </div>
                     ) : (
                         <div>
-                            <div style={{ fontSize: '2.5rem', fontWeight: 700, color: '#64748b', marginBottom: '1rem' }}>
+                            <div style={{ fontSize: 'clamp(1.8rem, 6vw, 2.5rem)', fontWeight: 700, color: '#64748b', marginBottom: '1rem' }}>
                                 No Active Line
                             </div>
                             <p style={{ color: '#94a3b8', maxWidth: '600px', lineHeight: '1.6' }}>
@@ -219,10 +219,10 @@ function ManagePhoneContent() {
             </section>
 
             {!company.phoneNumber && (
-                <section className="glass card" style={{ padding: '2.5rem' }}>
+                <section className="glass card" style={{ padding: 'clamp(1.5rem, 5vw, 2.5rem)' }}>
                     <h2 style={{ fontSize: '1.8rem', color: 'white', marginBottom: '2rem' }}>Acquire New Number</h2>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '1.5rem', alignItems: 'end', marginBottom: '3rem' }}>
+                    <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 1fr) minmax(200px, 1fr) auto', gap: '1.5rem', alignItems: 'end', marginBottom: '3rem' }}>
                         <div>
                             <label style={labelStyle}>Country</label>
                             <select
@@ -236,7 +236,7 @@ function ManagePhoneContent() {
                             </select>
                         </div>
                         <div>
-                            <label style={labelStyle}>Area Code (Optional, e.g. 30 for Berlin)</label>
+                            <label style={labelStyle}>Area Code (Optional)</label>
                             <input
                                 type="text"
                                 placeholder="e.g. 30"
@@ -249,9 +249,9 @@ function ManagePhoneContent() {
                             onClick={searchNumbers}
                             disabled={searching}
                             className="btn btn-primary"
-                            style={{ height: '46px', padding: '0 2.5rem' }}
+                            style={{ height: '46px', padding: '0 2rem', width: '100%' }}
                         >
-                            {searching ? 'Searching...' : 'Search Inventory'}
+                            {searching ? 'Wait...' : 'Search'}
                         </button>
                     </div>
 
@@ -312,8 +312,18 @@ function ManagePhoneContent() {
                             You are purchasing <span style={{ color: '#10b981', fontFamily: 'monospace', fontWeight: 700 }}>{selectedNumber.phoneNumber}</span> from {searchCountry}.
                         </p>
 
-                        <div style={{ background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.2)', padding: '1rem', borderRadius: '8px', marginBottom: '2rem', fontSize: '0.9rem', lineHeight: '1.6', color: '#93c5fd' }}>
-                            <strong>⚠️ Legal Requirement:</strong> To comply with local telecommunications regulations (e.g., German TKG), you must provide a valid physical address. This address will be registered with the carrier as the legal owner's address.
+                        <div style={{ background: 'rgba(234, 179, 8, 0.1)', border: '1px solid rgba(234, 179, 8, 0.2)', padding: '1.25rem', borderRadius: '12px', marginBottom: '2rem', fontSize: '0.95rem', lineHeight: '1.6', color: '#fde047' }}>
+                            <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                                <span style={{ fontSize: '1.5rem' }}>⚠️</span>
+                                <div>
+                                    <strong style={{ display: 'block', fontSize: '1.1rem', marginBottom: '0.25rem' }}>Critical Legal Requirement</strong>
+                                    You must provide an authentic physical address for your legal entity or residence.
+                                    <strong>Twilio</strong> imposes an immediate <strong style={{ color: '#ef4444' }}>$75 penalty fee</strong> if the address provided is incorrect or fraudulent.
+                                </div>
+                            </div>
+                            <div style={{ paddingLeft: '2.25rem', fontSize: '0.85rem', opacity: 0.9, borderTop: '1px solid rgba(234, 179, 8, 0.2)', paddingTop: '0.5rem', marginTop: '0.5rem' }}>
+                                This address will be registered with the carrier. Failure to comply with local telecommunications regulations may result in service suspension and legal fines.
+                            </div>
                         </div>
 
                         {purchaseError && (
@@ -336,10 +346,10 @@ function ManagePhoneContent() {
 
                             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem' }}>
                                 <div style={{ gridColumn: 'span 2' }}>
-                                    <label style={labelStyle}>Street Address</label>
+                                    <label style={labelStyle}>Street Address & House Number</label>
                                     <input
                                         required
-                                        placeholder="Musterstraße 123"
+                                        placeholder="Musterstraße 123 (يرجى إدخال اسم الشارع ورقم المنزل)"
                                         value={formData.street}
                                         onChange={e => setFormData({ ...formData, street: e.target.value })}
                                         style={inputStyle}
@@ -356,10 +366,19 @@ function ManagePhoneContent() {
                                     />
                                 </div>
                                 <div>
+                                    <label style={labelStyle}>Region / State</label>
+                                    <input
+                                        placeholder="Bayern / California"
+                                        value={formData.region}
+                                        onChange={e => setFormData({ ...formData, region: e.target.value })}
+                                        style={inputStyle}
+                                    />
+                                </div>
+                                <div>
                                     <label style={labelStyle}>City</label>
                                     <input
                                         required
-                                        placeholder="Berlin"
+                                        placeholder="Berlin / New York"
                                         value={formData.city}
                                         onChange={e => setFormData({ ...formData, city: e.target.value })}
                                         style={inputStyle}
@@ -379,6 +398,17 @@ function ManagePhoneContent() {
                                     <small style={{ display: 'block', marginTop: '0.5rem', color: '#64748b', fontSize: '0.8rem' }}>
                                         Must match the location of your legal entity.
                                     </small>
+                                </div>
+                                <div style={{ gridColumn: 'span 2', marginTop: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
+                                    <input
+                                        type="checkbox"
+                                        id="confirm-address"
+                                        required
+                                        style={{ marginTop: '0.3rem', cursor: 'pointer', width: '18px', height: '18px' }}
+                                    />
+                                    <label htmlFor="confirm-address" style={{ fontSize: '0.85rem', color: '#94a3b8', cursor: 'pointer', lineHeight: '1.4' }}>
+                                        I confirm that this address is accurate, authentic, and matches my official legal documents. I understand that providing false information will result in a $75 fine.
+                                    </label>
                                 </div>
                             </div>
 

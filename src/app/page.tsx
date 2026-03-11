@@ -12,19 +12,19 @@ export default function Home() {
 
   return (
     <main className="container" style={{ paddingBottom: '5rem' }}>
-      <header style={{ marginBottom: '4rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <header className="mobile-stack" style={{ marginBottom: '4rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <div className="glass" style={{ padding: '0.5rem', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Image src="/logo.png" alt="butTel Logo" width={80} height={80} style={{ borderRadius: '8px' }} />
+          <div className="glass" style={{ padding: '0.5rem', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <Image src="/logo.png" alt="butTel Logo" width={80} height={80} style={{ borderRadius: '8px', width: '60px', height: '60px' }} />
           </div>
           <div>
-            <h1 className="gradient-text" style={{ fontSize: '3rem', lineHeight: 1.1 }}>butTel</h1>
-            <p style={{ color: '#94a3b8', fontSize: '1.1rem', marginTop: '0.25rem' }}>Universal AI Receptionist for Every Business</p>
+            <h1 className="gradient-text" style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', lineHeight: 1.1 }}>butTel</h1>
+            <p style={{ color: '#94a3b8', fontSize: 'clamp(0.9rem, 3vw, 1.1rem)', marginTop: '0.25rem' }}>Universal AI Receptionist for Every Business</p>
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.75rem' }}>
-          <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
+        <div className="mobile-stack" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             {session ? (
               <>
                 <Link href={(session.user as any).role === 'admin' ? '/admin' : '/dashboard'} className="btn" style={{ background: '#1e293b', color: 'white', padding: '0.5rem 1rem', fontSize: '0.875rem', textDecoration: 'none', borderRadius: '6px' }}>
@@ -49,13 +49,13 @@ export default function Home() {
             background: status.isOpen ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
             color: status.isOpen ? '#10b981' : '#ef4444',
             border: '1px solid currentColor',
-            padding: '0.5rem 1rem',
-            fontSize: '1rem'
+            padding: '0.4rem 0.8rem',
+            fontSize: '0.9rem'
           }}>
             <div className="pulse" />
             {status.isOpen ? 'Gateway Online' : 'Out of Hours'}
           </div>
-          <span style={{ fontSize: '0.875rem', color: '#64748b' }}>{status.currentDay}, {status.currentTime} (Berlin)</span>
+          <span className="mobile-hide" style={{ fontSize: '0.875rem', color: '#64748b' }}>{status.currentDay}, {status.currentTime} (Berlin)</span>
         </div>
       </header>
 
@@ -150,11 +150,11 @@ export default function Home() {
         </div>
       </section>
       <section style={{ marginTop: '5rem', textAlign: 'center' }}>
-        <div className="glass card" style={{ padding: '4rem 2rem', background: 'linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(2, 6, 23, 0.8) 100%)' }}>
-          <h2 className="gradient-text" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: 800 }}>
+        <div className="glass card" style={{ padding: 'clamp(2rem, 5vw, 4rem) 1.5rem', background: 'linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(2, 6, 23, 0.8) 100%)' }}>
+          <h2 className="gradient-text" style={{ fontSize: 'clamp(1.8rem, 6vw, 2.5rem)', marginBottom: '1.5rem', fontWeight: 800 }}>
             Elevate Your Business with Intelligent AI Reception
           </h2>
-          <p style={{ color: '#94a3b8', fontSize: '1.25rem', maxWidth: '800px', margin: '0 auto 3rem', lineHeight: '1.8' }}>
+          <p style={{ color: '#94a3b8', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', maxWidth: '800px', margin: '0 auto 3rem', lineHeight: '1.8' }}>
             Never miss a lead again. butTel provides integrated solutions powered by advanced AI to answer your customers, schedule appointments, and provide professional support in multiple languages with unmatched efficiency.
           </p>
 

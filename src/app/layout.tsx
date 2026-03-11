@@ -38,23 +38,23 @@ export default function RootLayout({
           <TermsConsent />
           {children}
           <footer className="container" style={{ marginTop: '5rem', paddingBottom: '3rem', borderTop: '1px solid #1e293b', paddingTop: '3rem', color: '#64748b' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2rem' }}>
+            <div className="mobile-stack" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '3rem' }}>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ fontWeight: 600, color: '#e2e8f0', fontSize: '1.1rem' }}>butTel AI</div>
-                <div style={{ fontSize: '0.875rem' }}>© {new Date().getFullYear()} All rights reserved.</div>
-                <div style={{ display: 'flex', gap: '1.25rem', marginTop: '0.25rem' }}>
+              <div className="mobile-text-center" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', flex: '1 1 250px' }}>
+                <div style={{ fontWeight: 600, color: '#e2e8f0', fontSize: '1.25rem' }}>butTel AI</div>
+                <div style={{ fontSize: '0.875rem' }}>© {new Date().getFullYear()} butTel Technologies. All rights reserved.</div>
+                <div className="mobile-text-center" style={{ display: 'flex', gap: '1.25rem', marginTop: '0.5rem', justifyContent: 'inherit' }}>
                   <a href="https://twitter.com/buttel_ai" target="_blank" style={{ color: '#94a3b8', fontSize: '1.2rem', textDecoration: 'none' }} title="Twitter / X">𝕏</a>
                   <a href="https://linkedin.com/company/buttel" target="_blank" style={{ color: '#0077b5', fontSize: '1.2rem', textDecoration: 'none' }} title="LinkedIn">in</a>
                   <a href="https://instagram.com/buttel.ai" target="_blank" style={{ color: '#E1306C', fontSize: '1.2rem', textDecoration: 'none' }} title="Instagram">📸</a>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', alignItems: 'flex-end' }}>
-                <div style={{ display: 'flex', gap: '2rem', fontSize: '0.875rem' }}>
-                  <Link href="/terms" style={{ color: 'inherit', textDecoration: 'none' }}>Terms of Service</Link>
-                  <Link href="/privacy" style={{ color: 'inherit', textDecoration: 'none' }}>Privacy Policy</Link>
-                  <Link href="/contact" style={{ color: 'inherit', textDecoration: 'none' }}>Contact Us</Link>
+              <div className="mobile-stack" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', alignItems: 'flex-end', flex: '1 1 250px' }}>
+                <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.875rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                  <Link href="/terms" style={{ color: 'inherit', textDecoration: 'none' }}>Terms</Link>
+                  <Link href="/privacy" style={{ color: 'inherit', textDecoration: 'none' }}>Privacy</Link>
+                  <Link href="/contact" style={{ color: 'inherit', textDecoration: 'none' }}>Contact</Link>
                 </div>
 
                 <a
